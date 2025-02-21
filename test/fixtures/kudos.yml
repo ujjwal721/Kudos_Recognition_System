@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sender: one
+  receiver: one
+  message: MyText
+  points: 1
+
+two:
+  sender: two
+  receiver: two
+  message: MyText
+  points: 1

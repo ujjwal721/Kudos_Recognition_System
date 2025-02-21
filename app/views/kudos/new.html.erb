@@ -1,0 +1,32 @@
+<h1>Send Kudos</h1>
+
+<%= form_with model: @kudo, url: kudos_path, local: true do |form| %>
+  <div>
+    <strong>Sender:</strong> <%= current_user.name %>
+  </div>
+
+  <div>
+    <%= form.label :receiver_id, "Select Receiver" %><br>
+    <%= form.select :receiver_id, options_from_collection_for_select(@eligible_receivers, :id, :name) %>
+  </div>
+
+  <div>
+    <%= form.label :points %>
+    <%= form.number_field :points %>
+    <% allowed_range = Kudo::ALLOWED_POINT_RANGES[current_user.role_name] %>
+    <small>(Allowed: <%= allowed_range.begin %> to <%= allowed_range.end %>)</small>
+  </div>
+
+  <div>
+    <%= form.label :message %><br>
+    <%= form.text_area :message %>
+  </div>
+
+  <div>
+    <%= form.submit "Send Kudos" %>
+  </div>
+<% end %>
+
+<p>
+  <%= link_to "Back to Feed", feed_kudos_path, class: "btn btn-secondary" %>
+</p>

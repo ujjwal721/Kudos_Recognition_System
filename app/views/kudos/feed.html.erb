@@ -1,0 +1,40 @@
+<h1>Your Kudos Feed</h1>
+
+<!-- Search form: posts to users#index -->
+<%= form_with url: users_path, method: :get, local: true do |form| %>
+  <div class="mb-3">
+    <%= form.label :query, "Search Users:" %>
+    <%= form.text_field :query, placeholder: "Enter name or email", class: "form-control" %>
+  </div>
+  <div>
+    <%= form.submit "Search", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<hr>
+
+<h2>Recent Kudos</h2>
+<% if @kudos.present? %>
+  <ul>
+    <% @kudos.each do |kudo| %>
+      <li>
+        <% if kudo.sender_id == current_user.id %>
+          <strong>Sent to:</strong> <%= kudo.receiver.name %>
+        <% else %>
+          <strong>Received from:</strong> <%= kudo.sender.name %>
+        <% end %>
+        <br>
+        <strong>Message:</strong> <%= kudo.message %> -
+        <strong>Points:</strong> <%= kudo.points %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No recent kudos found.</p>
+<% end %>
+
+
+<div style="margin-top: 20px;">
+  <%= link_to "View Leaderboard", leaderboard_path, class: "btn btn-primary" %>
+  <%= link_to "Send Kudos", new_kudo_path, class: "btn btn-success", style: "margin-left: 10px;" %>
+</div>

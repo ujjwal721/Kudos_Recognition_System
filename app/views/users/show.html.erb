@@ -1,0 +1,35 @@
+<h1><%= @user.name %>'s Profile</h1>
+
+<p><strong>Email:</strong> <%= @user.email %></p>
+<p><strong>Role:</strong> <%= @user.role_name.to_s.humanize %></p>
+<p><strong>Total Points:</strong> <%= @user.kudos_received.sum(:points) %></p>
+
+<hr>
+
+<h2>Recent Kudos Sent</h2>
+<% if @recent_kudos_sent.any? %>
+  <ul>
+    <% @recent_kudos_sent.each do |kudo| %>
+      <li>
+        To: <%= kudo.receiver.name %> - <%= kudo.message %> (<%= kudo.points %> points)
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No recent kudos sent.</p>
+<% end %>
+
+<h2>Recent Kudos Received</h2>
+<% if @recent_kudos_received.any? %>
+  <ul>
+    <% @recent_kudos_received.each do |kudo| %>
+      <li>
+        From: <%= kudo.sender.name %> - <%= kudo.message %> (<%= kudo.points %> points)
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No recent kudos received.</p>
+<% end %>
+
+<%= link_to "Back to Feed", feed_kudos_path, class: "btn btn-secondary" %>
